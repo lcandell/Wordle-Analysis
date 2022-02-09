@@ -1,6 +1,7 @@
 var toggler = document.getElementsByTagName('td');
 var i;
 var curPos=0
+var r1Hst;
 toggler[curPos].style.color="red";
 
 function getWrd(row) {
@@ -37,6 +38,7 @@ function logKey(e) {
 	curPos = curPos + 1;
 	if (curPos==5) {
 		// console.log(getWrd(0),getPat(0),bstGuess[getWrd(0)][getPat(0)]);
+		r1Hst=wrdhst(getWrd(0),ansDict);
 		setWrd(1,bstGuess[getWrd(0)][getPat(0)]);
 	}
 	if (curPos==30) curPos=0;
@@ -58,8 +60,12 @@ for (i = 0; i < toggler.length; i++) {
 	  if (this.bgColor==="404040") this.bgColor="CCCC00";
 	  else if (this.bgColor==="CCCC00") this.bgColor="009900";
 	  else this.bgColor="404040";
-	  if (this.cid<5 && bstGuess[getWrd(0)] && bstGuess[getWrd(0)][getPat(0)])
-	  	setWrd(1,bstGuess[getWrd(0)][getPat(0)])
+	  if (this.cid<5)
+		var wrd=getWrd(0)
+		var pat=getPat(0)
+		if ((wrd in bstGuess) && !(pat in bstGuess[wrd]))
+			bstGuess[wrd][pat]=optguess(ansDict,r1Hst[pat]);
+	  	setWrd(1,bstGuess[wrd][pat])
 	} 
   });
 }
@@ -82,4 +88,54 @@ function evgs(wrd,guess) {
 			letr[guess.charAt(k)]-=1;
 		}
 	return res.join('');
+}
+
+function wrdhst(guess,dict) {
+	var res = {}
+	for(const wrd in dict) {
+		p=evgs(dict[wrd],guess);
+		if (p in res)
+			res[p].push(dict[wrd]);
+		else
+			res[p]=[dict[wrd]];
+	}
+	return res
+}
+
+function cnthst(guess,dict) {
+	var res = {}
+	for(const wrd in dict) {
+		p=evgs(dict[wrd],guess);
+		if (p in res)
+			res[p]+=1;
+		else
+			res[p]=1;
+	}
+	return res
+}
+
+
+function entropy(hst) {
+	var res=0.0
+	var tl=0
+	var le=0
+	for(const pat in hst){
+		le = Array.isArray(hst[pat]) ? hst[pat].length() : hst[pat];
+		res += le*Math.log2(le);
+		tl += le;
+	}
+	return Math.log2(tl) - res/tl;
+}
+
+function optguess(guesses,dict) {
+	mxe=0
+	bstWord=""
+	for(const gu in guesses){
+		e = entropy(cnthst(guesses[gu],dict));
+		if (e>mxe) {
+			mxe=e;
+			bstWord=guesses[gu];
+		}
+	}
+	return bstWord;
 }

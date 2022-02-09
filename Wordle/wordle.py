@@ -11,7 +11,7 @@ print(len(dic5),len(dic5long),len(d5lset))
 import json 
 
 with open('words5.json') as f:
-    burdledic = json.load(f)
+	burdledic = json.load(f)
 
 ansdict= burdledic#dic5
 guessdict=burdledic#d5lset
@@ -131,57 +131,61 @@ def evgs(wrd,guess):
 
 import math
 def entropy(pdic):
-    e=0.0
-    t=0.0
-    for p in pdic:
-        w=len(pdic[p])
-        e += w*math.log(w,2)
-        t += w
-    return math.log(t,2) - e/t
+	e=0.0
+	t=0.0
+	for p in pdic:
+		w=len(pdic[p])
+		e += w*math.log(w,2)
+		t += w
+	return math.log(t,2) - e/t
 
-guesses = [('crate','****o')]#,('shout','o****'),('links','*g**g')]
+guesses = [('quick','**ggg')]#,('shout','o****'),('links','*g**g')]
 
 #dic5=burdledic
 cdic=dic5
 for gu,pat in guesses:
-    pdic = {}
-    mxp=0
-    mxi=''
-    for wrd in cdic:
-        p = evgs(wrd,gu)
-        pdic[p] = pdic.get(p,[])+[wrd]
-        if len(pdic[p])>mxp:
-            mxp = len(pdic[p])
-            mxi = p
-    if pat in pdic:
-        cdic = pdic[pat]
-        print(gu,pat,len(cdic),mxp,mxi)
-    else:
-        print('No words match!')
-        break
+	pdic = {}
+	mxp=0
+	mxi=''
+	for wrd in cdic:
+		p = evgs(wrd,gu)
+		pdic[p] = pdic.get(p,[])+[wrd]
+		if len(pdic[p])>mxp:
+			mxp = len(pdic[p])
+			mxi = p
+	if pat in pdic:
+		cdic = pdic[pat]
+		print(gu,pat,len(cdic),mxp,mxi)
+	else:
+		print('No words match!')
+		break
  
- 
+if len(cdic)<12:
+	print(cdic)
+	
 while len(cdic)>1:
-    mxe=0
-    for gu in cdic+dic5:
-        pdic = {}
-        mxp=0
-        for wrd in cdic:
-            p = evgs(wrd,gu)
-            pdic[p] = pdic.get(p,[])+[wrd]
-            if len(pdic[p])>mxp:
-                mxp = len(pdic[p])
-                mxdic=pdic[p]
-                mxi = p
-        e = entropy(pdic)
-        if e > mxe:
-            mxe = e
-            owrd = gu
-            opat = mxi
-            odic = mxdic
-    print(owrd,opat,len(odic),mxe)
-    guesses.append((owrd,opat))
-    cdic = odic
+	mxe=0
+	for gu in cdic+dic5:
+		pdic = {}
+		mxp=0
+		for wrd in cdic:
+			p = evgs(wrd,gu)
+			pdic[p] = pdic.get(p,[])+[wrd]
+			if len(pdic[p])>mxp:
+				mxp = len(pdic[p])
+				mxdic=pdic[p]
+				mxi = p
+		e = entropy(pdic)
+		if e > mxe:
+			mxe = e
+			owrd = gu
+			opat = mxi
+			odic = mxdic
+	print(owrd,opat,len(odic),mxe)
+	guesses.append((owrd,opat))
+	cdic = odic
+	if len(cdic)<12:
+		print(cdic)
 
    
 

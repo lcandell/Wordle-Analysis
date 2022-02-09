@@ -7,16 +7,17 @@
         .then(res => res.json())
         .then((out) => {
             bstGuess=out;
+            ansDict=Object.keys(bstGuess);
     }).catch(err => console.error(err));
 </script>
 </head>
 <body>
 <font face='arial'>
-Strategy tree for Wordle, as described <a href="http://www.alexhealy.net/papers/wordle.pdf">here</a>.
+Dynamic strategy tree for Wordle. See  <a href="http://www.alexhealy.net/papers/wordle.pdf">here</a> for an excellent explanation.
 <br>
-Begin with the initial guess REACT.
+You type in a guess on any line.
 <br>
-Click on the corresponding pattern of colors to expand the tree.
+Click on the corresponding boxes to change the reported color pattern.
 </font>
 <ul class="root">
 <li><span class="caret"><table><tr><td bgcolor="404040">R</td><td bgcolor="404040">E</td><td bgcolor="404040">A</td><td bgcolor="404040">C</td><td bgcolor="404040">T</td></tr></table></span></li>

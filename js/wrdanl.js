@@ -61,6 +61,21 @@ for (i = 0; i < toggler.length; i++) {
 }
 
 function evgs(wrd,guess) {
-	var let = [...wrd].reduce((a, e) => { a[e] = a[e] ? a[e] + 1 : 1; return a }, {});
-	return let
+	var letr = [...wrd].reduce((a, e) => { a[e] = a[e] ? a[e] + 1 : 1; return a }, {});
+	var res =['*','*','*','*','*'];
+	var uas = [];
+
+	for(var k=0;k<5;k++) 
+		if (wrd.charAt(k)==guess.charAt(k)) {
+			res[k]='g';
+			letr[wrd[k]] -=1;
+		}
+		else if (wrd.includes(guess.charAt(k)))
+			uas.push(k)
+	for(const k of uas)
+		if (letr[guess.charAt(k)]>0) {
+			res[k]='o';
+			letr[guess.charAt(k)]-=1;
+		}
+	return res.join('');
 }

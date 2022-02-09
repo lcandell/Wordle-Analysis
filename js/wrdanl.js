@@ -49,14 +49,18 @@ for (i = 0; i < toggler.length; i++) {
   toggler[i].cid = i
   toggler[i].addEventListener("click", function() {
 	//   console.log(parseInt(this.cid/5),this.cid%5);
-	  toggler[curPos].style.color="white";
-	  curPos=this.cid;
-	  this.style.color="red"
+	if (curPos!=this.cid) {
+		toggler[curPos].style.color="white";
+		curPos=this.cid;
+		this.style.color="red"
+	}
+	else {
 	  if (this.bgColor==="404040") this.bgColor="CCCC00";
 	  else if (this.bgColor==="CCCC00") this.bgColor="009900";
 	  else this.bgColor="404040";
 	  if (this.cid<5 && bstGuess[getWrd(0)] && bstGuess[getWrd(0)][getPat(0)])
-	  	setWrd(1,bstGuess[getWrd(0)][getPat(0)]) 
+	  	setWrd(1,bstGuess[getWrd(0)][getPat(0)])
+	} 
   });
 }
 

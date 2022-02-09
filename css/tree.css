@@ -1,0 +1,40 @@
+/* Remove default bullets */
+ul {
+  list-style-type: none;
+  padding-left: 120px;
+}
+
+ul.root {
+  list-style-type: none;
+  padding-left: 10px;
+}
+
+table {
+  table-layout: fixed;
+  border: 1px black;
+  padding: 1px;
+}
+
+td {
+  line-height: 50px;
+  width: 60px;
+  font-family: monospace;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+}
+
+td.X { background-color:#404040; }
+td.C { background-color:#CCCC00; }
+td.M { background-color:#009900; }
+
+/* Hide the nested list */
+.nested {
+  display: block;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.active {
+  display: block;
+}

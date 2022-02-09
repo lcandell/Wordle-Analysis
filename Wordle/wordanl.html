@@ -1,16 +1,4 @@
-
-
-<head>
-<link rel="stylesheet" href="css/tree.css">
-<script>
-    fetch('js/bstguess.json')
-        .then(res => res.json())
-        .then((out) => {
-            bstGuess=out;
-    }).catch(err => console.error(err));
-</script>
-</head>
-<body>
+<link rel="stylesheet" href="tree.css">
 <font face='arial'>
 Strategy tree for Wordle, as described <a href="http://www.alexhealy.net/papers/wordle.pdf">here</a>.
 <br>
@@ -26,5 +14,4 @@ Click on the corresponding pattern of colors to expand the tree.
 <li><span class="caret"><table><tr><td bgcolor="404040">B</td><td bgcolor="009900">U</td><td bgcolor="404040">G</td><td bgcolor="404040">G</td><td bgcolor="009900">Y</td></tr></table></span></li>
 <li><span class="caret"><table><tr><td bgcolor="009900">B</td><td bgcolor="009900">U</td><td bgcolor="009900">G</td><td bgcolor="009900">G</td><td bgcolor="009900">Y</td></tr></table></span></li>
 </ul>
-<script src="js/wrdanl.js"></script>
-</body>
+<script src="wrdanl.js"></script>

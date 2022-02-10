@@ -1,7 +1,17 @@
+ansDict=[]
+
+fetch('js/bstguess.json')
+.then(res => res.json())
+.then((out) => {
+	bstGuess=out;
+	ansDict=Object.keys(bstGuess);
+	rwHst=[wrdhst(getWrd(0),ansDict),[],[],[],[],[]];
+}).catch(err => console.error(err));
+
+
 var toggler = document.getElementsByTagName('td');
 var i;
 var curPos=0
-var r1Hst;
 var colorMap={'*':"404040",'o':"CCCC00",'g':"009900"}
 toggler[curPos].style.color="red";
 
@@ -43,21 +53,39 @@ function getPat(row) {
 	return st
 }
 
+function autoFill(row) {
+	for(var i=row+1;i<6;i++) {
+		var wrd=getWrd(i-1)
+		var pat=getPat(i-1)
+		if (i==1) {
+			if ((wrd in bstGuess) && !(pat in bstGuess[wrd]))
+				bstGuess[wrd][pat]=optguess(ansDict,rwHst[i-1][pat]);
+			var bestG=bstGuess[wrd][pat]
+		}
+		else var bestG=optguess(ansDict,rwHst[i-1][pat]);
+		setWrd(i,bestG)
+		rwHst[i]=wrdhst(bestG,rwHst[i-1][pat])
+		setPat(i,mxHst(rwHst[i]))
+	}
+}
+
+
 function logKey(e) {
 	// console.log(e.key);
 	toggler[curPos].innerHTML = e.key.toUpperCase();
 	toggler[curPos].style.color="white";
-	curPos = curPos + 1;
-	if (curPos==5) {
-		// console.log(getWrd(0),getPat(0),bstGuess[getWrd(0)][getPat(0)]);
-		r1Hst=wrdhst(getWrd(0),ansDict);
-		setWrd(1,bstGuess[getWrd(0)][getPat(0)]);
+	if (curPos%5==4) {
+		row = parseInt(curPos/5)
+		rwHst[row]=wrdhst(getWrd(row),(row==0)?ansDict:rwHst[row][pat[getPat(row)]])
+		autoFill(row)
 	}
+	curPos = curPos + 1;
 	if (curPos==30) curPos=0;
 	toggler[curPos].style.color="red";
 }
 
 document.onkeypress=logKey;
+ 
 
 for (i = 0; i < toggler.length; i++) {
   toggler[i].cid = i
@@ -72,17 +100,9 @@ for (i = 0; i < toggler.length; i++) {
 	  if (this.bgColor==="404040") this.bgColor="CCCC00";
 	  else if (this.bgColor==="CCCC00") this.bgColor="009900";
 	  else this.bgColor="404040";
-	  if (this.cid<5) {
-		var wrd=getWrd(0)
-		var pat=getPat(0)
-		if ((wrd in bstGuess) && !(pat in bstGuess[wrd]))
-			bstGuess[wrd][pat]=optguess(ansDict,r1Hst[pat]);
-	  	setWrd(1,bstGuess[wrd][pat])
-		var r2Hst = wrdhst(bstGuess[wrd][pat],r1Hst[pat])
-		setPat(1,mxHst(r2Hst))
-
-	  }
-	} 
+	  var row = parseInt(this.cid/5)
+	  autoFill(row)
+	}
   });
 }
 
@@ -114,7 +134,6 @@ function evgs(wrd,guess) {
 function wrdhst(guess,dict) {
 	var res = {}
 	for(const wrd in dict) {
-		console.log(wrd,dict[wrd])
 		p=evgs(dict[wrd],guess);
 		if (p in res)
 			res[p].push(dict[wrd]);

@@ -59,7 +59,7 @@ function autoFill(row) {
 		var pat=getPat(i-1)
 		if (i==1) {
 			if ((wrd in bstGuess) && !(pat in bstGuess[wrd]))
-				bstGuess[wrd][pat]=optguess(ansDict,rwHst[i-1][pat]);
+				bstGuess[wrd][pat]=optguess(ansDict,rwHst[0][pat]);
 			var bestG=bstGuess[wrd][pat]
 		}
 		else var bestG=optguess(ansDict,rwHst[i-1][pat]);
@@ -76,7 +76,7 @@ function logKey(e) {
 	toggler[curPos].style.color="white";
 	if (curPos%5==4) {
 		row = parseInt(curPos/5)
-		rwHst[row]=wrdhst(getWrd(row),(row==0)?ansDict:rwHst[row][getPat(row)])
+		rwHst[row]=wrdhst(getWrd(row),(row==0)?ansDict:rwHst[row-1][getPat(row-1)])
 		autoFill(row)
 	}
 	curPos = curPos + 1;

@@ -114,6 +114,7 @@ function evgs(wrd,guess) {
 function wrdhst(guess,dict) {
 	var res = {}
 	for(const wrd in dict) {
+		console.log(wrd,dict[wrd])
 		p=evgs(dict[wrd],guess);
 		if (p in res)
 			res[p].push(dict[wrd]);
@@ -161,7 +162,10 @@ function entropy(hst) {
 }
 
 function optguess(guesses,dict) {
-	mxe=0
+	// Check Candidate words first if small addition in case of ties
+	if (dict.length<10)
+		guesses = dict.concat(guesses)
+	mxe=-1
 	bstWord=""
 	for(const gu in guesses){
 		e = entropy(cnthst(guesses[gu],dict));

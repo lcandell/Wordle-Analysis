@@ -2,6 +2,7 @@ var toggler = document.getElementsByTagName('td');
 var i;
 var curPos=0
 var r1Hst;
+var colorMap={'*':"404040",'o':"CCCC00",'g':"009900"}
 toggler[curPos].style.color="red";
 
 function getWrd(row) {
@@ -13,10 +14,21 @@ function getWrd(row) {
 }
 
 function setWrd(row,wrd) {
+	if (!wrd)
+		wrd = "-----"
 	for(var i=0;i<5;i++){
 		toggler[row*5+i].innerHTML=wrd[i].toUpperCase();
 	}
 }
+
+function setPat(row,pat) {
+	if (!pat)
+		pat = "*****"
+	for(var i=0;i<5;i++){
+		toggler[row*5+i].bgColor=colormap[pat[i]];
+	}
+}
+
 
 function getPat(row) {
 	var st=""
@@ -60,12 +72,13 @@ for (i = 0; i < toggler.length; i++) {
 	  if (this.bgColor==="404040") this.bgColor="CCCC00";
 	  else if (this.bgColor==="CCCC00") this.bgColor="009900";
 	  else this.bgColor="404040";
-	  if (this.cid<5)
+	  if (this.cid<5) {
 		var wrd=getWrd(0)
 		var pat=getPat(0)
 		if ((wrd in bstGuess) && !(pat in bstGuess[wrd]))
 			bstGuess[wrd][pat]=optguess(ansDict,r1Hst[pat]);
 	  	setWrd(1,bstGuess[wrd][pat])
+	  }
 	} 
   });
 }
@@ -101,6 +114,18 @@ function wrdhst(guess,dict) {
 	}
 	return res
 }
+
+function mxHst(hist) {
+	mx=0
+	var res=""
+	for(const pat in hist)
+		if (hist[pat].length>mx) {
+			mx=hist[pat].length;
+			res=pat;
+		}
+	return res
+}
+
 
 function cnthst(guess,dict) {
 	var res = {}

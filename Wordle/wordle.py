@@ -139,7 +139,7 @@ def entropy(pdic):
 		t += w
 	return math.log(t,2) - e/t
 
-guesses = [('quick','**ggg')]#,('shout','o****'),('links','*g**g')]
+guesses = [('moose','oo***')]#,('shout','o****'),('links','*g**g')]
 
 #dic5=burdledic
 cdic=dic5

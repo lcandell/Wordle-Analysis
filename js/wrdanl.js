@@ -25,7 +25,7 @@ function setPat(row,pat) {
 	if (!pat)
 		pat = "*****"
 	for(var i=0;i<5;i++){
-		toggler[row*5+i].bgColor=colormap[pat[i]];
+		toggler[row*5+i].bgColor=colorMap[pat[i]];
 	}
 }
 
@@ -78,9 +78,17 @@ for (i = 0; i < toggler.length; i++) {
 		if ((wrd in bstGuess) && !(pat in bstGuess[wrd]))
 			bstGuess[wrd][pat]=optguess(ansDict,r1Hst[pat]);
 	  	setWrd(1,bstGuess[wrd][pat])
+		var r2Hst = wrdhst(bstGuess[wrd][pat],r1Hst[pat])
+		setPat(1,mxHst(r2Hst))
+
 	  }
 	} 
   });
+}
+
+for(i=2;i<6;i++){
+	setWrd(i,'-----')
+	setPat(i,'*****')
 }
 
 function evgs(wrd,guess) {

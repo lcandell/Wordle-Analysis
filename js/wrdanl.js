@@ -76,7 +76,7 @@ function logKey(e) {
 	toggler[curPos].style.color="white";
 	if (curPos%5==4) {
 		row = parseInt(curPos/5)
-		rwHst[row]=wrdhst(getWrd(row),(row==0)?ansDict:rwHst[row][pat[getPat(row)]])
+		rwHst[row]=wrdhst(getWrd(row),(row==0)?ansDict:rwHst[row][getPat(row)])
 		autoFill(row)
 	}
 	curPos = curPos + 1;

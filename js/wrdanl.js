@@ -57,7 +57,11 @@ function autoFill(row) {
 	for(var i=row+1;i<6;i++) {
 		var wrd=getWrd(i-1)
 		var pat=getPat(i-1)
-		if (i==1) {
+		if (!(pat in rwHst[i-1])) {
+			setWrd(i,'-----')
+			rwHst[i]={}
+		}
+		else if (i==1) {
 			if ((wrd in bstGuess) && !(pat in bstGuess[wrd]))
 				bstGuess[wrd][pat]=optguess(ansDict,rwHst[0][pat]);
 			var bestG=bstGuess[wrd][pat]

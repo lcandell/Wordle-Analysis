@@ -10,6 +10,7 @@ fetch('js/bstguess.json')
 
 
 var toggler = document.getElementsByTagName('td');
+var wrdLeft = document.getElementsByTagName('th');
 var i;
 var curPos=0
 var colorMap={'*':"404040",'o':"CCCC00",'g':"009900"}
@@ -69,7 +70,9 @@ function autoFill(row) {
 		else var bestG=optguess(ansDict,rwHst[i-1][pat]);
 		setWrd(i,bestG)
 		rwHst[i]=wrdhst(bestG,rwHst[i-1][pat])
-		setPat(i,mxHst(rwHst[i]))
+		npat=mxHst(rwHst[i])
+		setPat(i,npat)
+		wrdLeft[i].innerHTML= (npat in rwHst[i]) ? rwHst[i][npat].length : 0
 	}
 }
 
@@ -80,7 +83,9 @@ function logKey(e) {
 	toggler[curPos].style.color="white";
 	if (curPos%5==4) {
 		row = parseInt(curPos/5)
+		var pat = getPat(row)
 		rwHst[row]=wrdhst(getWrd(row),(row==0)?ansDict:rwHst[row-1][getPat(row-1)])
+		wrdLeft[row].innerHTML= (pat in rwHst[row]) ? rwHst[row][pat].length : 0
 		autoFill(row)
 	}
 	curPos = curPos + 1;
@@ -105,6 +110,8 @@ for (i = 0; i < toggler.length; i++) {
 	  else if (this.bgColor==="CCCC00") this.bgColor="009900";
 	  else this.bgColor="404040";
 	  var row = parseInt(this.cid/5)
+	  var pat = getPat(row)
+	  wrdLeft[row].innerHTML= (pat in rwHst[row]) ? rwHst[row][pat].length : 0
 	  autoFill(row)
 	}
   });

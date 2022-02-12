@@ -8,7 +8,6 @@ fetch('js/bstguess.json')
 	rwHst=[wrdhst(getWrd(0),ansDict),[],[],[],[],[]];
 }).catch(err => console.error(err));
 
-
 var toggler = document.getElementsByTagName('td');
 var wrdLeft = document.getElementsByTagName('th');
 var i;
@@ -44,9 +43,9 @@ function setPat(row,pat) {
 function getPat(row) {
 	var st=""
 	for(var i=0;i<5;i++){
-		if (toggler[row*5+i].bgColor=="404040")
+		if (toggler[row*5+i].bgColor==colorMap['*'])
 			st = st + "*";
-		else if (toggler[row*5+i].bgColor=="CCCC00")
+		else if (toggler[row*5+i].bgColor==colorMap['o'])
 			st = st + "o";
 		else
 			st = st + 'g';
@@ -70,7 +69,7 @@ function autoFill(row) {
 		else var bestG=optguess(ansDict,rwHst[i-1][pat]);
 		setWrd(i,bestG)
 		rwHst[i]=wrdhst(bestG,rwHst[i-1][pat])
-		npat=mxHst(rwHst[i])
+		var npat=mxHst(rwHst[i])
 		setPat(i,npat)
 		wrdLeft[i].innerHTML= (npat in rwHst[i]) ? rwHst[i][npat].length : 0
 	}
@@ -82,7 +81,7 @@ function logKey(e) {
 	toggler[curPos].innerHTML = e.key.toUpperCase();
 	toggler[curPos].style.color="white";
 	if (curPos%5==4) {
-		row = parseInt(curPos/5)
+		var row = parseInt(curPos/5)
 		var pat = getPat(row)
 		rwHst[row]=wrdhst(getWrd(row),(row==0)?ansDict:rwHst[row-1][getPat(row-1)])
 		wrdLeft[row].innerHTML= (pat in rwHst[row]) ? rwHst[row][pat].length : 0
@@ -106,9 +105,9 @@ for (i = 0; i < toggler.length; i++) {
 		this.style.color="red"
 	}
 	else {
-	  if (this.bgColor==="404040") this.bgColor="CCCC00";
-	  else if (this.bgColor==="CCCC00") this.bgColor="009900";
-	  else this.bgColor="404040";
+	  if (this.bgColor===colorMap['*']) this.bgColor=colorMap['o'];
+	  else if (this.bgColor===colorMap['o']) this.bgColor=colorMap['g'];
+	  else this.bgColor=colorMap['*'];
 	  var row = parseInt(this.cid/5)
 	  var pat = getPat(row)
 	  wrdLeft[row].innerHTML= (pat in rwHst[row]) ? rwHst[row][pat].length : 0
@@ -145,7 +144,7 @@ function evgs(wrd,guess) {
 function wrdhst(guess,dict) {
 	var res = {}
 	for(const wrd in dict) {
-		p=evgs(dict[wrd],guess);
+		var p=evgs(dict[wrd],guess);
 		if (p in res)
 			res[p].push(dict[wrd]);
 		else
@@ -155,7 +154,7 @@ function wrdhst(guess,dict) {
 }
 
 function mxHst(hist) {
-	mx=0
+	var mx=0
 	var res=""
 	for(const pat in hist)
 		if (hist[pat].length>mx) {
@@ -169,7 +168,7 @@ function mxHst(hist) {
 function cnthst(guess,dict) {
 	var res = {}
 	for(const wrd in dict) {
-		p=evgs(dict[wrd],guess);
+		var p=evgs(dict[wrd],guess);
 		if (p in res)
 			res[p]+=1;
 		else
@@ -194,11 +193,11 @@ function entropy(hst) {
 function optguess(guesses,dict) {
 	// Check Candidate words first if small addition in case of ties
 	if (dict.length<10)
-		guesses = dict.concat(guesses)
-	mxe=-1
-	bstWord=""
+		var guesses = dict.concat(guesses)
+	var mxe=-1
+	var bstWord=""
 	for(const gu in guesses){
-		e = entropy(cnthst(guesses[gu],dict));
+		var e = entropy(cnthst(guesses[gu],dict));
 		if (e>mxe) {
 			mxe=e;
 			bstWord=guesses[gu];

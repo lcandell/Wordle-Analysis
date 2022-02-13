@@ -56,7 +56,7 @@ function getPat(row) {
 function autoColor(row) {
 	if (ansWrd == 'absurd')
 		var npat=mxHst(rwHst[row])
-	else var npat=evgs(document.getElementById("answord").value.toLowerCase,getWrd(row))
+	else var npat=evgs(document.getElementById("answord").value.toLowerCase(),getWrd(row))
 	setPat(row,npat)
 	return npat
 }

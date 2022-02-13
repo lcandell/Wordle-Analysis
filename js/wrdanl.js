@@ -1,5 +1,5 @@
 ansDict=[]
-
+ansWrd='absurd'
 fetch('js/bstguess.json')
 .then(res => res.json())
 .then((out) => {
@@ -53,6 +53,14 @@ function getPat(row) {
 	return st
 }
 
+function autoColor(row) {
+	if (ansWrd == 'absurd')
+		var npat=mxHst(rwHst[row])
+	else var npat=evgs(document.getElementById("answord").value,getWrd(row))
+	setPat(row,npat)
+	return npat
+}
+
 function autoFill(row) {
 	for(var i=row+1;i<6;i++) {
 		var wrd=getWrd(i-1)
@@ -69,8 +77,7 @@ function autoFill(row) {
 		else var bestG=optguess(ansDict,rwHst[i-1][pat]);
 		setWrd(i,bestG)
 		rwHst[i]=wrdhst(bestG,rwHst[i-1][pat])
-		var npat=mxHst(rwHst[i])
-		setPat(i,npat)
+		npat=autoColor(i)
 		wrdLeft[i].innerHTML= (npat in rwHst[i]) ? rwHst[i][npat].length : 0
 	}
 }
@@ -82,8 +89,8 @@ function logKey(e) {
 	toggler[curPos].style.color="white";
 	if (curPos%5==4) {
 		var row = parseInt(curPos/5)
-		var pat = getPat(row)
 		rwHst[row]=wrdhst(getWrd(row),(row==0)?ansDict:rwHst[row-1][getPat(row-1)])
+		var pat =autoColor(row)
 		wrdLeft[row].innerHTML= (pat in rwHst[row]) ? rwHst[row][pat].length : 0
 		autoFill(row)
 	}

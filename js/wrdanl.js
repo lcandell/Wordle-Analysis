@@ -129,9 +129,12 @@ for(i=2;i<6;i++){
 }
 
 function evgs(wrd,guess) {
-	var letr = [...wrd].reduce((a, e) => { a[e] = a[e] ? a[e] + 1 : 1; return a }, {});
+	var letr ={}//= [...wrd].reduce((a, e) => { a[e] = a[e] ? a[e] + 1 : 1; return a }, {});
 	var res =['*','*','*','*','*'];
 	var uas = [];
+
+	for(let c of wrd)
+		letr[c]=(letr[c])?letr[c]+1:1
 
 	for(var k=0;k<5;k++) 
 		if (wrd.charAt(k)==guess.charAt(k)) {

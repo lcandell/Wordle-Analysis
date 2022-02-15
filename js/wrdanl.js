@@ -123,7 +123,7 @@ for (i = 0; i < toggler.length; i++) {
   });
 }
 
-for(i=2;i<6;i++){
+for(i=0;i<6;i++){
 	setWrd(i,'-----')
 	setPat(i,'*****')
 }

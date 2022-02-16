@@ -39,7 +39,6 @@ function setPat(row,pat) {
 	}
 }
 
-
 function getPat(row) {
 	var st=""
 	for(var i=0;i<5;i++){
@@ -82,26 +81,26 @@ function autoFill(row) {
 	}
 }
 
-
 function logKey(e) {
 	// console.log(e.key);
-	toggler[curPos].innerHTML = e.key.toUpperCase();
-	toggler[curPos].style.color="white";
-	if (curPos%5==4) {
-		var row = parseInt(curPos/5)
-		rwHst[row]=wrdhst(getWrd(row),(row==0)?ansDict:rwHst[row-1][getPat(row-1)])
-		var pat =autoColor(row)
-		wrdLeft[row].innerHTML= (pat in rwHst[row]) ? rwHst[row][pat].length : 0
-		autoFill(row)
+	if (e.key.length==1 && e.key.match(/[a-z]/i)) {
+		toggler[curPos].innerHTML = e.key.toUpperCase();
+		toggler[curPos].style.color="white";
+		if (curPos%5==4) {
+			var row = parseInt(curPos/5)
+			rwHst[row]=wrdhst(getWrd(row),(row==0)?ansDict:rwHst[row-1][getPat(row-1)])
+			var pat =autoColor(row)
+			wrdLeft[row].innerHTML= (pat in rwHst[row]) ? rwHst[row][pat].length : 0
+			autoFill(row)
+		}
+		curPos = curPos + 1;
+		if (curPos==30) curPos=0;
+		toggler[curPos].style.color="red";
 	}
-	curPos = curPos + 1;
-	if (curPos==30) curPos=0;
-	toggler[curPos].style.color="red";
 }
 
 document.onkeypress=logKey;
  
-
 for (i = 0; i < toggler.length; i++) {
   toggler[i].cid = i
   toggler[i].addEventListener("click", function() {
@@ -174,7 +173,6 @@ function mxHst(hist) {
 	return res
 }
 
-
 function cnthst(guess,dict) {
 	var res = {}
 	for(const wrd in dict) {
@@ -186,7 +184,6 @@ function cnthst(guess,dict) {
 	}
 	return res
 }
-
 
 function entropy(hst) {
 	var res=0.0

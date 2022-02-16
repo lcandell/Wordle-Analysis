@@ -193,7 +193,7 @@ function entropy(hst) {
 	var tl=0
 	var le=0
 	for(const pat in hst){
-		le = Array.isArray(hst[pat]) ? hst[pat].length() : hst[pat];
+		le = Array.isArray(hst[pat]) ? hst[pat].length : hst[pat];
 		res += le*Math.log2(le);
 		tl += le;
 	}

@@ -38,6 +38,11 @@ td.M {
   text-align: center;
   vertical-align: middle; }
 
+  #answord {
+    width : 1ch;
+    display : inline;
+  }
+
 /* Hide the nested list */
 .nested {
   display: block;

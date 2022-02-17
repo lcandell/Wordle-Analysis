@@ -110,6 +110,7 @@ for (i = 0; i < toggler.length; i++) {
   toggler[i].cid = i
   toggler[i].addEventListener("click", function() {
 	//   console.log(parseInt(this.cid/5),this.cid%5);
+	document.getElementById("answord").focus();
 	if (curPos!=this.cid) {
 		toggler[curPos].style.color="white";
 		curPos=this.cid;

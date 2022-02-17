@@ -55,7 +55,7 @@ function getPat(row) {
 function autoColor(row) {
 	if (ansWrd == 'absurd')
 		var npat=mxHst(rwHst[row])
-	else var npat=evgs(document.getElementById("answord").value.toLowerCase(),getWrd(row))
+	else var npat=evgs(getWrd(6).toLowerCase(),getWrd(row))
 	setPat(row,npat)
 	return npat
 }
@@ -86,15 +86,20 @@ function logKey(e) {
 	if (e.key.length==1 && e.key.match(/[a-z]/i)) {
 		toggler[curPos].innerHTML = e.key.toUpperCase();
 		toggler[curPos].style.color="white";
-		if (curPos%5==4) {
+		if (curPos<30 && curPos%5==4) {
 			var row = parseInt(curPos/5)
 			rwHst[row]=wrdhst(getWrd(row),(row==0)?ansDict:rwHst[row-1][getPat(row-1)])
 			var pat =autoColor(row)
 			wrdLeft[row].innerHTML= (pat in rwHst[row]) ? rwHst[row][pat].length : 0
 			autoFill(row)
 		}
+		else if (curPos>29) {
+			document.getElementById("choice2").checked=true
+			ansWrd='word'
+		}
 		curPos = curPos + 1;
-		if (curPos==30) curPos=0;
+		if (curPos==30 || curPos==35) curPos=0;
+		
 		toggler[curPos].style.color="red";
 	}
 }
@@ -110,7 +115,7 @@ for (i = 0; i < toggler.length; i++) {
 		curPos=this.cid;
 		this.style.color="red"
 	}
-	else {
+	else if (this.cid<30) {
 	  if (this.bgColor===colorMap['*']) this.bgColor=colorMap['o'];
 	  else if (this.bgColor===colorMap['o']) this.bgColor=colorMap['g'];
 	  else this.bgColor=colorMap['*'];

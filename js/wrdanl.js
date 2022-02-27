@@ -71,7 +71,9 @@ function autoFill(row) {
 				rwHst[i]={}
 			}
 			else if (i==1) {
-				if ((wrd in bstGuess) && !(pat in bstGuess[wrd]))
+				if (!(wrd in bstGuess))
+					bstGuess[wrd]={}
+				if (!(pat in bstGuess[wrd]))
 					bstGuess[wrd][pat]=optguess(ansDict,rwHst[0][pat]);
 				var bestG=bstGuess[wrd][pat]
 			}

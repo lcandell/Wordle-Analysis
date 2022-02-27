@@ -61,24 +61,28 @@ function autoColor(row) {
 }
 
 function autoFill(row) {
-	for(var i=row+1;i<6;i++) {
-		var wrd=getWrd(i-1)
-		var pat=getPat(i-1)
-		if (!(pat in rwHst[i-1])) {
-			setWrd(i,'-----')
-			rwHst[i]={}
+	document.getElementById("calc").innerHTML="Calculating...";
+	window.setTimeout(function() {
+		for(var i=row+1;i<6;i++) {
+			var wrd=getWrd(i-1)
+			var pat=getPat(i-1)
+			if (!(pat in rwHst[i-1])) {
+				setWrd(i,'-----')
+				rwHst[i]={}
+			}
+			else if (i==1) {
+				if ((wrd in bstGuess) && !(pat in bstGuess[wrd]))
+					bstGuess[wrd][pat]=optguess(ansDict,rwHst[0][pat]);
+				var bestG=bstGuess[wrd][pat]
+			}
+			else var bestG=optguess(ansDict,rwHst[i-1][pat]);
+			setWrd(i,bestG)
+			rwHst[i]=wrdhst(bestG,rwHst[i-1][pat])
+			npat=autoColor(i)
+			wrdLeft[i].innerHTML= (npat in rwHst[i]) ? rwHst[i][npat].length : 0
 		}
-		else if (i==1) {
-			if ((wrd in bstGuess) && !(pat in bstGuess[wrd]))
-				bstGuess[wrd][pat]=optguess(ansDict,rwHst[0][pat]);
-			var bestG=bstGuess[wrd][pat]
-		}
-		else var bestG=optguess(ansDict,rwHst[i-1][pat]);
-		setWrd(i,bestG)
-		rwHst[i]=wrdhst(bestG,rwHst[i-1][pat])
-		npat=autoColor(i)
-		wrdLeft[i].innerHTML= (npat in rwHst[i]) ? rwHst[i][npat].length : 0
-	}
+		document.getElementById("calc").innerHTML=""
+	},20);
 }
 
 function logKey(e) {
@@ -206,7 +210,7 @@ function entropy(hst) {
 function optguess(guesses,dict) {
 	// Check Candidate words first if small addition in case of ties
 	if (dict.length<10)
-		var guesses = dict.concat(guesses)
+	 	var guesses = dict.concat(guesses)
 	var mxe=-1
 	var bstWord=""
 	for(const gu in guesses){

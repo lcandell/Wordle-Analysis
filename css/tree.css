@@ -43,6 +43,12 @@ td.M {
     display : inline;
   }
 
+
+  #calc {
+    color: red; 
+    font-size : 15px;
+  }
+
 /* Hide the nested list */
 .nested {
   display: block;

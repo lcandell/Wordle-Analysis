@@ -197,6 +197,19 @@ function cnthst(guess,dict) {
 	return res
 }
 
+// Utility Function to print histogram info in sorted order
+function prHst(hst) {
+	var items = Object.keys(hst).map(function(key) {
+		return [key, hst[key].length]
+		});
+	items.sort(function(first, second) {
+		return second[1] - first[1];
+		});
+	console.log("Entropy=",entropy(hst))
+	for(const i in items)
+		console.log(items[i][0],hst[items[i][0]])
+	}
+
 function entropy(hst) {
 	var res=0.0
 	var tl=0

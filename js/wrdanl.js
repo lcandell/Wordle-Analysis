@@ -179,7 +179,8 @@ function mxHst(hist) {
 	var res=""
 	for(const pat in hist)
 		if (hist[pat].length>mx) {
-			mx=hist[pat].length;
+			if (pat != "ggggg")
+				mx=hist[pat].length;
 			res=pat;
 		}
 	return res
